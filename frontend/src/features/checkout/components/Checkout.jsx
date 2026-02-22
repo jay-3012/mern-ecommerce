@@ -76,7 +76,7 @@ export const Checkout = () => {
 
             try {
                 // Create order on backend
-                const result = await fetch("http://localhost:8000/payment/create-order", {
+                const result = await fetch(`${process.env.REACT_APP_BASE_URL}/payment/create-order`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ amount: order.total }),
@@ -98,7 +98,7 @@ export const Checkout = () => {
                     order_id: data.id,
                     handler: async function (response) {
                         try {
-                            const verificationRes = await fetch("http://localhost:8000/payment/verify-payment", {
+                            const verificationRes = await fetch(`${process.env.REACT_APP_BASE_URL}/payment/verify-payment`, {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
