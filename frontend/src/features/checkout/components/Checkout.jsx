@@ -90,7 +90,7 @@ export const Checkout = () => {
                 const data = await result.json();
 
                 const options = {
-                    key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Read from environment variables
+                    key: "rzp_test_SJGYXUI1DnpYvE", 
                     amount: data.amount,
                     currency: data.currency,
                     name: "LuxeCart",
