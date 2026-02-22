@@ -251,7 +251,7 @@ export const ProductDetails = () => {
                         <Stack rowGap={".5rem"}>
 
                             {/* title */}
-                            <Typography variant='h4' fontWeight={600}>{product?.title}</Typography>
+                            <Typography variant='h4' fontWeight={500} sx={{color:"#3A5A40"}}>{product?.title}</Typography>
 
                             {/* rating */}
                             <Stack sx={{flexDirection:"row",columnGap:is340?".5rem":"1rem",alignItems:"center",flexWrap:'wrap',rowGap:'1rem'}}>
@@ -261,13 +261,13 @@ export const ProductDetails = () => {
                             </Stack>
 
                             {/* price */}
-                            <Typography variant='h5'>${product?.price}</Typography>
+                            <Typography variant='h5' fontWeight={600} sx={{color:"#A3B18A"}}>${product?.price}</Typography>
                         </Stack>
 
                         {/* description */}
                         <Stack rowGap={".8rem"}>
-                            <Typography>{product?.description}</Typography>
-                            <hr />
+                            <Typography sx={{color:"#555", lineHeight: 1.6}}>{product?.description}</Typography>
+                            <hr style={{borderColor:"#EAEAEA", margin:"1rem 0"}}/>
                         </Stack>
                         
 
@@ -298,7 +298,7 @@ export const ProductDetails = () => {
                                 <Stack flexDirection={'row'} columnGap={is387?".5rem":"1rem"}>
                                     {
                                         SIZES.map((size)=>(
-                                            <motion.div onClick={()=>handleSizeSelect(size)} whileHover={{scale:1.050}} whileTap={{scale:1}} style={{border:selectedSize===size?'':"1px solid grayText",borderRadius:"8px",width:"30px",height:"30px",display:"flex",justifyContent:"center",alignItems:"center",cursor:"pointer",padding:"1.2rem",backgroundColor:selectedSize===size?"#DB4444":"whitesmoke",color:selectedSize===size?"white":""}}>
+                                            <motion.div onClick={()=>handleSizeSelect(size)} whileHover={{scale:1.050}} whileTap={{scale:1}} style={{border:selectedSize===size?'':"1px solid #EAEAEA",borderRadius:"8px",width:"30px",height:"30px",display:"flex",justifyContent:"center",alignItems:"center",cursor:"pointer",padding:"1.2rem",backgroundColor:selectedSize===size?"#588157":"#FAFAFA",color:selectedSize===size?"white":"#3A5A40"}}>
                                                 <p>{size}</p>
                                             </motion.div>
                                         ))
@@ -313,9 +313,9 @@ export const ProductDetails = () => {
                                 <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
                                     
                                     <MotionConfig whileHover={{scale:1.050}} whileTap={{scale:1}}>
-                                        <motion.button onClick={handleDecreaseQty}  style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"",color:"black",outline:"none",border:'1px solid black',borderRadius:"8px"}}>-</motion.button>
-                                        <p style={{margin:"0 1rem",fontSize:"1.1rem",fontWeight:'400'}}>{quantity}</p>
-                                        <motion.button onClick={handleIncreaseQty} style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"black",color:"white",outline:"none",border:'none',borderRadius:"8px"}}>+</motion.button>
+                                        <motion.button onClick={handleDecreaseQty}  style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"#FAFAFA",color:"#3A5A40",outline:"none",border:'1px solid #EAEAEA',borderRadius:"8px", cursor:"pointer"}}>-</motion.button>
+                                        <p style={{margin:"0 1rem",fontSize:"1.1rem",fontWeight:'500'}}>{quantity}</p>
+                                        <motion.button onClick={handleIncreaseQty} style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"#FAFAFA",color:"#3A5A40",outline:"none",border:'1px solid #EAEAEA',borderRadius:"8px", cursor:"pointer"}}>+</motion.button>
                                     </MotionConfig>
 
                                 </Stack>
@@ -323,12 +323,12 @@ export const ProductDetails = () => {
                                 {/* add to cart */}
                                 {
                                     isProductAlreadyInCart?
-                                    <button style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"black",color:"white",outline:"none",border:'none',borderRadius:"8px"}} onClick={()=>navigate("/cart")}>In Cart</button>
-                                    :<motion.button whileHover={{scale:1.050}} whileTap={{scale:1}} onClick={handleAddToCart} style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"black",color:"white",outline:"none",border:'none',borderRadius:"8px"}}>Add To Cart</motion.button>
+                                    <button style={{padding:"12px 24px",fontSize:"1.050rem",backgroundColor:"#A3B18A",color:"white",outline:"none",border:'none',borderRadius:"24px", cursor:"pointer"}} onClick={()=>navigate("/cart")}>In Cart</button>
+                                    :<motion.button whileHover={{scale:1.020}} whileTap={{scale:1}} onClick={handleAddToCart} style={{padding:"12px 24px",fontSize:"1.050rem",backgroundColor:"#A3B18A",color:"white",outline:"none",border:'none',borderRadius:"24px", cursor:"pointer", boxShadow:"0 4px 14px rgba(163, 177, 138, 0.4)"}}>Add To Cart</motion.button>
                                 }
 
                                 {/* wishlist */}
-                                <motion.div style={{border:"1px solid grayText",borderRadius:"4px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                <motion.div style={{border:"1px solid #EAEAEA",borderRadius:"8px",display:"flex",justifyContent:"center",alignItems:"center", padding:"0 5px", cursor:"pointer"}}>
                                     <Checkbox checked={isProductAlreadyinWishlist} onChange={(e)=>handleAddRemoveFromWishlist(e)} icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:'red'}} />} />
                                 </motion.div>
 
@@ -341,25 +341,25 @@ export const ProductDetails = () => {
 
 
                         {/* product perks */}
-                        <Stack mt={3} sx={{justifyContent:"center",alignItems:'center',border:"1px grayText solid",borderRadius:"7px"}}>
+                        <Stack mt={3} sx={{justifyContent:"center",alignItems:'center',border:"1px solid #EAEAEA",borderRadius:"8px", backgroundColor:"#FAFAFA"}}>
                             
                             <Stack p={2} flexDirection={'row'} alignItems={"center"} columnGap={'1rem'} width={'100%'} justifyContent={'flex-sart'}>
-                                <Box>
+                                <Box sx={{color:"#3A5A40"}}>
                                     <LocalShippingOutlinedIcon/>
                                 </Box>
                                 <Stack>
-                                    <Typography>Free Delivery</Typography>
-                                    <Typography>Enter your postal for delivery availabity</Typography>
+                                    <Typography fontWeight={500}>Free Delivery</Typography>
+                                    <Typography variant="body2" color="text.secondary">Enter your postal for delivery availability</Typography>
                                 </Stack>
                             </Stack>
-                            <hr style={{width:"100%"}} />
+                            <hr style={{width:"100%", borderColor:"#EAEAEA", margin:0}} />
                             <Stack p={2} flexDirection={'row'} alignItems={"center"} width={'100%'} columnGap={'1rem'} justifyContent={'flex-start'}>
-                                <Box>
+                                <Box sx={{color:"#3A5A40"}}>
                                     <CachedOutlinedIcon/>
                                 </Box>
                                 <Stack>
-                                    <Typography>Return Delivery</Typography>
-                                    <Typography>Free 30 Days Delivery Returns</Typography>
+                                    <Typography fontWeight={500}>Return Delivery</Typography>
+                                    <Typography variant="body2" color="text.secondary">Free 30 Days Delivery Returns</Typography>
                                 </Stack>
                             </Stack>
 

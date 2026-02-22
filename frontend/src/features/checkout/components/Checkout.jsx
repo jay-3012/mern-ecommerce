@@ -54,9 +54,91 @@ export const Checkout = () => {
         dispatch(addAddressAsync(address))
     }
 
-    const handleCreateOrder=()=>{
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
+    const handleCreateOrder=async()=>{
         const order={user:loggedInUser._id,item:cartItems,address:selectedAddress,paymentMode:selectedPaymentMethod,total:orderTotal+SHIPPING+TAXES}
-        dispatch(createOrderAsync(order))
+        
+        if (selectedPaymentMethod === 'CARD') {
+            const res = await loadRazorpayScript();
+            if (!res) {
+                alert("Razorpay SDK failed to load. Are you online?");
+                return;
+            }
+
+            try {
+                // Create order on backend
+                const result = await fetch("http://localhost:8000/payment/create-order", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: order.total }),
+                });
+
+                if (!result.ok) {
+                    alert("Failed to create order. Please try again.");
+                    return;
+                }
+
+                const data = await result.json();
+
+                const options = {
+                    key: "dummy_key", // Dummy key since process.env might not have it yet
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: "LuxeCart",
+                    description: "Payment for order",
+                    order_id: data.id,
+                    handler: async function (response) {
+                        try {
+                            const verificationRes = await fetch("http://localhost:8000/payment/verify-payment", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                }),
+                            });
+
+                            if (verificationRes.ok) {
+                                dispatch(createOrderAsync(order));
+                            } else {
+                                alert("Payment verification failed!");
+                            }
+                        } catch (error) {
+                            console.error(error);
+                            alert("Payment verification error");
+                        }
+                    },
+                    prefill: {
+                        name: loggedInUser?.name || "Customer",
+                        email: loggedInUser?.email || "customer@example.com",
+                        contact: selectedAddress?.phoneNumber || "9999999999"
+                    },
+                    theme: {
+                        color: "#A3B18A"
+                    }
+                };
+
+                const paymentObject = new window.Razorpay(options);
+                paymentObject.open();
+
+            } catch (error) {
+                console.error(error);
+                alert("Server error. Please try again.");
+            }
+            
+        } else {
+            dispatch(createOrderAsync(order))
+        }
     }
 
   return (
@@ -112,8 +194,8 @@ export const Checkout = () => {
                     </Stack>
 
                     <Stack flexDirection={'row'} alignSelf={'flex-end'} columnGap={1}>
-                        <LoadingButton loading={status==='pending'} type='submit' variant='contained'>add</LoadingButton>
-                        <Button color='error' variant='outlined' onClick={()=>reset()}>Reset</Button>
+                        <LoadingButton loading={status==='pending'} type='submit' variant='contained' sx={{backgroundColor: "#A3B18A", "&:hover":{backgroundColor:"#588157"}}}>Add Address</LoadingButton>
+                        <Button color='error' variant='text' onClick={()=>reset()}>Reset</Button>
                     </Stack>
             </Stack>
 
@@ -129,11 +211,11 @@ export const Checkout = () => {
                         {
                             addresses.map((address,index)=>(
                                 <FormControl item >
-                                    <Stack key={address._id} p={is480?2:2} width={is480?'100%':'20rem'} height={is480?'auto':'15rem'}  rowGap={2} component={is480?Paper:Paper} elevation={1}>
+                                    <Stack key={address._id} p={is480?2:2} width={is480?'100%':'20rem'} height={is480?'auto':'15rem'}  rowGap={2} component={"div"} sx={{border: selectedAddress===address ? "2px solid #A3B18A": "1px solid #EAEAEA", borderRadius:"8px", backgroundColor:"white", cursor:'pointer', transition:'all 0.2s', '&:hover':{boxShadow:'0 4px 12px rgba(0,0,0,0.05)'}}} onClick={()=>setSelectedAddress(addresses[index])}>
 
                                         <Stack flexDirection={'row'} alignItems={'center'}>
-                                            <Radio checked={selectedAddress===address} name='addressRadioGroup' value={selectedAddress} onChange={(e)=>setSelectedAddress(addresses[index])}/>
-                                            <Typography>{address.type}</Typography>
+                                            <Radio checked={selectedAddress===address} name='addressRadioGroup' value={selectedAddress} sx={{color:"#A3B18A", '&.Mui-checked':{color:"#A3B18A"}}} onChange={(e)=>setSelectedAddress(addresses[index])}/>
+                                            <Typography fontWeight={500} sx={{color:"#3A5A40"}}>{address.type}</Typography>
                                         </Stack>
 
                                         {/* details */}
@@ -161,13 +243,13 @@ export const Checkout = () => {
                     <Stack rowGap={2}>
 
                         <Stack flexDirection={'row'} justifyContent={'flex-start'} alignItems={'center'}>
-                            <Radio value={selectedPaymentMethod} name='paymentMethod' checked={selectedPaymentMethod==='COD'} onChange={()=>setSelectedPaymentMethod('COD')}/>
-                            <Typography>Cash</Typography>
+                            <Radio value={selectedPaymentMethod} name='paymentMethod' checked={selectedPaymentMethod==='COD'} sx={{color:"#A3B18A", '&.Mui-checked':{color:"#A3B18A"}}} onChange={()=>setSelectedPaymentMethod('COD')}/>
+                            <Typography>Cash on Delivery</Typography>
                         </Stack>
 
                         <Stack flexDirection={'row'} justifyContent={'flex-start'} alignItems={'center'}>
-                            <Radio value={selectedPaymentMethod} name='paymentMethod' checked={selectedPaymentMethod==='CARD'} onChange={()=>setSelectedPaymentMethod('CARD')}/>
-                            <Typography>Card</Typography>
+                            <Radio value={selectedPaymentMethod} name='paymentMethod' checked={selectedPaymentMethod==='CARD'} sx={{color:"#A3B18A", '&.Mui-checked':{color:"#A3B18A"}}} onChange={()=>setSelectedPaymentMethod('CARD')}/>
+                            <Typography>Credit/Debit Card</Typography>
                         </Stack>
 
                     </Stack>
@@ -180,7 +262,7 @@ export const Checkout = () => {
         <Stack  width={is900?'100%':'auto'} alignItems={is900?'flex-start':''}>
             <Typography variant='h4'>Order summary</Typography>
             <Cart checkout={true}/>
-            <LoadingButton fullWidth loading={orderStatus==='pending'} variant='contained' onClick={handleCreateOrder} size='large'>Pay and order</LoadingButton>
+            <LoadingButton fullWidth loading={orderStatus==='pending'} variant='contained' onClick={handleCreateOrder} size='large' sx={{mt: 2, borderRadius:"24px", backgroundColor: "#A3B18A", "&:hover":{backgroundColor:"#588157"}}}>Pay and order</LoadingButton>
         </Stack>
 
     </Stack>

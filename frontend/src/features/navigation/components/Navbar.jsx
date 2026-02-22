@@ -55,11 +55,11 @@ export const Navbar=({isProductList=false})=> {
   ];
 
   return (
-    <AppBar position="sticky" sx={{backgroundColor:"white",boxShadow:"none",color:"text.primary"}}>
-        <Toolbar sx={{p:1,height:"4rem",display:"flex",justifyContent:"space-around"}}>
+    <AppBar position="sticky" sx={{backgroundColor:"#FAFAFA",boxShadow:"none",borderBottom:"1px solid #E0E0E0",color:"#3A5A40"}}>
+        <Toolbar sx={{p:1,height:"5rem",display:"flex",justifyContent:"space-around"}}>
 
-          <Typography variant="h6" noWrap component="a" href="/" sx={{ mr: 2, display: { xs: 'none', md: 'flex' },fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none', }}>
-            MERN SHOP
+          <Typography variant="h5" noWrap component="a" href="/" sx={{ mr: 2, display: { xs: 'none', md: 'flex' },fontWeight: 600, letterSpacing: '.1rem', color: 'primary.customBlack', textDecoration: 'none', }}>
+            LuxeCart
           </Typography>
 
 
@@ -101,9 +101,9 @@ export const Navbar=({isProductList=false})=> {
                 </MenuItem>
               ))}
             </Menu>
-            <Typography variant='h6' fontWeight={300}>{is480?`${userInfo?.name.toString().split(" ")[0]}`:`Hey👋, ${userInfo?.name}`}</Typography>
-            {loggedInUser.isAdmin && <Button variant='contained'>Admin</Button>}
-            <Stack sx={{flexDirection:"row",columnGap:"1rem",alignItems:"center",justifyContent:"center"}}>
+            <Typography variant='body1' fontWeight={400} sx={{color:"#3A5A40"}}>{is480?`${userInfo?.name.toString().split(" ")[0]}`:`Welcome, ${userInfo?.name}`}</Typography>
+            {loggedInUser.isAdmin && <Button variant='outlined' size="small" sx={{color:"#3A5A40", borderColor:"#3A5A40", borderRadius:"20px"}}>Admin</Button>}
+            <Stack sx={{flexDirection:"row",columnGap:".5rem",alignItems:"center",justifyContent:"center"}}>
 
             
             {

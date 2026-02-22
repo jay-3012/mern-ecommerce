@@ -19,7 +19,7 @@ export const Footer = () => {
     }
 
   return (
-    <Stack sx={{backgroundColor:theme.palette.primary.main,paddingTop:"3rem",paddingLeft:is700?"1rem":"3rem",paddingRight:is700?"1rem":"3rem",paddingBottom:"1.5rem",rowGap:"5rem",color:theme.palette.primary.light,justifyContent:"space-around"}}>
+    <Stack sx={{backgroundColor:"#A3B18A",paddingTop:"3rem",paddingLeft:is700?"1rem":"3rem",paddingRight:is700?"1rem":"3rem",paddingBottom:"1.5rem",rowGap:"5rem",color:"#FAFAFA",justifyContent:"space-around"}}>
 
             {/* upper */}
             <Stack flexDirection={'row'} rowGap={'1rem'} justifyContent={is700?"":'space-around'} flexWrap={'wrap'}>
@@ -57,7 +57,7 @@ export const Footer = () => {
 
                 <Stack rowGap={'1rem'} padding={'1rem'}>
                     <Typography  variant='h6'>Download App</Typography>
-                    <Typography sx={{...labelStyles,color:"graytext",fontWeight:500}}>Save $3 with App New User Only</Typography>
+                    <Typography sx={{...labelStyles,color:"#EAEAEA",fontWeight:400}}>Save $3 with App New User Only</Typography>
                     <Stack flexDirection={'row'} columnGap={'.5rem'}>
 
                         <Box width={'100px'} height={"100px"}>
@@ -88,7 +88,7 @@ export const Footer = () => {
 
             {/* lower */}
             <Stack alignSelf={"center"}>
-                <Typography color={'GrayText'}>&copy; Mern Store {new Date().getFullYear()}. All right reserved</Typography>
+                <Typography color={'#EAEAEA'}>&copy; LuxeCart {new Date().getFullYear()}. All right reserved</Typography>
             </Stack>
 
     </Stack>

@@ -3,17 +3,21 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   palette: {
     primary: {
-      main:"#000000",
-      light:"#ffffff",
-      dark:'#DB4444',
-      customBlack:"#191919"
+      main: "#A3B18A", // Sage Green
+      light: "#DAD7CD", // Light Creamy Green
+      dark: '#588157', // Darker Forest Green
+      customBlack: "#3A5A40" // Softened Dark Green instead of harsh black
     },
-    secondary:{
-      main:"#background.paper"
+    secondary: {
+      main: "#D4A373" // Muted Peach/Tan
     },
+    background: {
+      default: "#FAFAFA",
+      paper: "#FFFFFF"
+    }
   },
 
-  
+
 
   breakpoints: {
     values: {
@@ -25,7 +29,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily:"Poppins, sans-serif",
+    fontFamily: "Poppins, sans-serif",
     h1: {  // -1rem rule
       fontSize: "6rem",
 
@@ -57,7 +61,7 @@ export const theme = createTheme({
       "@media (max-width:960px)": {
         fontSize: "2.4rem",
       },
-      
+
       "@media (max-width:662px)": {
         fontSize: "2rem",
       },
@@ -67,7 +71,7 @@ export const theme = createTheme({
 
     },
     h4: {
-       fontSize: "2.125rem",
+      fontSize: "2.125rem",
       "@media (max-width:960px)": {
         fontSize: "1.5rem",
       },

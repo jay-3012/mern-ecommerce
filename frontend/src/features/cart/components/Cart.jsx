@@ -113,8 +113,8 @@ export const Cart = ({checkout}) => {
             {
             !checkout && 
             <Stack rowGap={'1rem'}>
-                <Button variant='contained' component={Link} to='/checkout'>Checkout</Button>
-                <motion.div style={{alignSelf:'center'}} whileHover={{y:2}}><Chip sx={{cursor:"pointer",borderRadius:"8px"}} component={Link} to={'/'} label="or continue shopping" variant='outlined'/></motion.div>
+                <Button variant='contained' component={Link} to='/checkout' sx={{padding:"12px 24px",borderRadius:"24px", backgroundColor:"#A3B18A", "&:hover":{backgroundColor:"#588157"}}} >Proceed to Checkout</Button>
+                <motion.div style={{alignSelf:'center'}} whileHover={{y:2}}><Chip sx={{cursor:"pointer",borderRadius:"24px", color:"#588157", borderColor:"#588157"}} component={Link} to={'/'} label="or Continue Shopping" variant='outlined'/></motion.div>
             </Stack>
             }
     

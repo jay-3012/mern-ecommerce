@@ -63,19 +63,19 @@ export const AdminOrders = () => {
 
   const getStatusColor=(status)=>{
     if(status==='Pending'){
-      return {bgcolor:'#dfc9f7',color:'#7c59a4'}
+      return {bgcolor:'#FAFAFA',color:'#7c59a4', border: '1px solid #7c59a4'}
     }
     else if(status==='Dispatched'){
-      return {bgcolor:'#feed80',color:'#927b1e'}
+      return {bgcolor:'#FAFAFA',color:'#927b1e', border: '1px solid #927b1e'}
     }
     else if(status==='Out for delivery'){
-      return {bgcolor:'#AACCFF',color:'#4793AA'}
+      return {bgcolor:'#FAFAFA',color:'#4793AA', border: '1px solid #4793AA'}
     }
     else if(status==='Delivered'){
-      return {bgcolor:"#b3f5ca",color:"#548c6a"}
+      return {bgcolor:"#FAFAFA",color:"#588157", border: '1px solid #588157'}
     }
     else if(status==='Cancelled'){
-      return {bgcolor:"#fac0c0",color:'#cc6d72'}
+      return {bgcolor:"#FAFAFA",color:'#cc6d72', border: '1px solid #cc6d72'}
     }
   }
 
@@ -88,7 +88,7 @@ export const AdminOrders = () => {
 
         {
           orders.length?
-          <TableContainer sx={{width:is1620?"95vw":"auto",overflowX:'auto'}} component={Paper} elevation={2}>
+          <TableContainer sx={{width:is1620?"95vw":"auto",overflowX:'auto', border: "1px solid #EAEAEA", borderRadius:"8px"}} component={"div"} >
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -158,7 +158,7 @@ export const AdminOrders = () => {
                             }
                           </Select>
                         </FormControl>
-                        ):<Chip label={order.status} sx={getStatusColor(order.status)}/>
+                        ):<Chip label={order.status} sx={{...getStatusColor(order.status), borderRadius:"4px", fontWeight:500}}/>
                         }
                       
                     </TableCell>
@@ -170,7 +170,7 @@ export const AdminOrders = () => {
                         editIndex===index?(
                           <Button>
 
-                            <IconButton type='submit'><CheckCircleOutlinedIcon/></IconButton>
+                            <IconButton type='submit' sx={{color:"#588157"}}><CheckCircleOutlinedIcon/></IconButton>
                           </Button>
                         )
                         :

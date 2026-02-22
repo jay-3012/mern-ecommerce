@@ -47,7 +47,7 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
     {
 
     isProductAlreadyinWishlist!==-1 ?
-    <Stack component={isAdminCard?"":isWishlistCard?"":is408?'':Paper} mt={is408?2:0} elevation={1} p={2} width={is408?'auto':is488?"200px":is608?"240px":is752?"300px":is932?'240px':is1410?'300px':'340px'} sx={{cursor:"pointer"}} onClick={()=>navigate(`/product-details/${id}`)}>
+    <Stack component={isAdminCard?"":isWishlistCard?"":is408?'':"div"} mt={is408?2:0} p={2} width={is408?'auto':is488?"200px":is608?"240px":is752?"300px":is932?'240px':is1410?'300px':'340px'} sx={{cursor:"pointer", border:"1px solid #EAEAEA", borderRadius:"8px", backgroundColor:"white", transition: "transform 0.2s, box-shadow 0.2s", '&:hover': {transform: 'translateY(-4px)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)'}}} onClick={()=>navigate(`/product-details/${id}`)}>
 
         {/* image display */}
         <Stack>
@@ -59,7 +59,7 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
 
             <Stack>
                 <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                    <Typography variant='h6' fontWeight={400}>{title}</Typography>
+                    <Typography variant='body1' fontWeight={500} sx={{color:"#3A5A40"}}>{title}</Typography>
                     {
                     !isAdminCard && 
                     <motion.div whileHover={{scale:1.3,y:-10,zIndex:100}} whileTap={{scale:1}} transition={{duration:.4,type:"spring"}}>
@@ -71,15 +71,14 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
             </Stack>
 
             <Stack sx={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                <Typography>${price}</Typography>
+                <Typography fontWeight={600} sx={{color:"#A3B18A"}}>${price}</Typography>
                 {
                     !isWishlistCard? isProductAlreadyInCart?
                     'Added to cart'
                     :
-                    !isAdminCard &&
-                    <motion.button  whileHover={{scale:1.030}} whileTap={{scale:1}} onClick={(e)=>handleAddToCart(e)} style={{padding:"10px 15px",borderRadius:"3px",outline:"none",border:"none",cursor:"pointer",backgroundColor:"black",color:"white",fontSize:is408?'.9rem':is488?'.7rem':is500?'.8rem':'.9rem'}}>
+                    <motion.button  whileHover={{scale:1.030}} whileTap={{scale:1}} onClick={(e)=>handleAddToCart(e)} style={{padding:"8px 16px",borderRadius:"24px",outline:"none",border:"none",cursor:"pointer",backgroundColor:"#A3B18A",color:"white",fontWeight:500,fontSize:is408?'.9rem':is488?'.7rem':is500?'.8rem':'.9rem'}}>
                         <div style={{display:"flex",alignItems:"center",columnGap:".5rem"}}>
-                            <p>Add To Cart</p>
+                            <span>Add To Cart</span>
                         </div>
                     </motion.button>
                     :''

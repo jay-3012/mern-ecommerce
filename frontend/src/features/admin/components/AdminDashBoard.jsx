@@ -196,12 +196,12 @@ export const AdminDashBoard = () => {
                             <ProductCard key={product._id} id={product._id} title={product.title} thumbnail={product.thumbnail} brand={product.brand.name} price={product.price} isAdminCard={true}/>
                         </Stack>
                         <Stack paddingLeft={2} paddingRight={2} flexDirection={'row'} justifySelf={'flex-end'} alignSelf={'flex-end'} columnGap={is488?1:2}>
-                            <Button component={Link} to={`/admin/product-update/${product._id}`} variant='contained'>Update</Button>
+                            <Button component={Link} to={`/admin/product-update/${product._id}`} variant='outlined' sx={{color:"#A3B18A", borderColor:"#A3B18A", borderRadius:"20px"}}>Update</Button>
                             {
                                 product.isDeleted===true?(
-                                    <Button onClick={()=>handleProductUnDelete(product._id)} color='error' variant='outlined'>Un-delete</Button>
+                                    <Button onClick={()=>handleProductUnDelete(product._id)} variant='outlined' sx={{color:"#3A5A40", borderColor:"#3A5A40", borderRadius:"20px"}}>Un-delete</Button>
                                 ):(
-                                    <Button onClick={()=>handleProductDelete(product._id)} color='error' variant='outlined'>Delete</Button>
+                                    <Button onClick={()=>handleProductDelete(product._id)} color='error' variant='contained' sx={{borderRadius:"20px", backgroundColor:"#DB4444", color:"white", boxShadow:"none"}}>Delete</Button>
                                 )
                             }
                         </Stack>
