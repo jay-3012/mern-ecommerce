@@ -25,24 +25,34 @@ connectToDB()
 
 
 // middlewares
-const allowedOrigins = process.env.ORIGIN
-    ? process.env.ORIGIN.split(',').map(url => url.trim())
-    : [];
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://luxecraft-1.vercel.app',
+    'https://luxecart-nine.vercel.app',
+    process.env.ORIGIN
+].filter(Boolean);
 
 server.use(cors({
     origin: (origin, callback) => {
-        console.log("Incoming request from origin:", origin);
-        console.log("Allowed origins configured as:", allowedOrigins);
+        // Allow requests with no origin (like mobile apps, curl, or postman)
+        if (!origin) return callback(null, true);
 
-        if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+        // Always allow if it's one of our known domains
+        if (allowedOrigins.some(o => o && origin.startsWith(o))) {
+            return callback(null, origin);
         }
+
+        // Otherwise, allow it if they somehow configured a wildcard
+        if (process.env.ORIGIN === '*') {
+            return callback(null, '*');
+        }
+
+        console.log("CORS BLOCKED request from origin:", origin);
+        return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     exposedHeaders: ['X-Total-Count'],
-    methods: ['GET', 'POST', 'PATCH', 'DELETE']
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
 }))
 server.use(express.json())
 server.use(cookieParser())
