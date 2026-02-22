@@ -25,9 +25,15 @@ connectToDB()
 
 
 // middlewares
-const allowedOrigins = process.env.ORIGIN ? process.env.ORIGIN.split(',') : [];
+const allowedOrigins = process.env.ORIGIN
+    ? process.env.ORIGIN.split(',').map(url => url.trim())
+    : [];
+
 server.use(cors({
     origin: (origin, callback) => {
+        console.log("Incoming request from origin:", origin);
+        console.log("Allowed origins configured as:", allowedOrigins);
+
         if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
             callback(null, true);
         } else {
